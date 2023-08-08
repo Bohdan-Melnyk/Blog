@@ -1,4 +1,4 @@
-Create Table USER (
+Create Table USERS (
                       id int PRIMARY KEY,
                       name varchar(100) NOT NULL,
                       email varchar(100) NOT NULL,
@@ -37,11 +37,11 @@ Create Table LIKES (
 );
 
 INSERT INTO USERS(id, name, email, password, sex, age)
-VALUES (1, 'Bohdan', 'myemail@my.com', '1111', 'MALE', 25)
-    (2, 'Vadym', 'vadymmy.com', '2222', 'MALE', 24),
-    (3, 'Ostap', 'ostapmy.com', '3333', 'MALE', 33),
-    (4, 'Hanna', 'hannamy.com', '4444', 'FEMALE', 28),
-    (5, 'Natali', 'natalimy.com', '555', 'FEMALE', 24);
+VALUES (1, 'Bohdan', 'myemail@my.com', '1111', 'MALE', 25),
+    (2, 'Vadym', 'vadymmy@.com', '2222', 'MALE', 24),
+    (3, 'Ostap', 'ostapmy@.com', '3333', 'MALE', 33),
+    (4, 'Hanna', 'hannamy@.com', '4444', 'FEMALE', 28),
+    (5, 'Natali', 'natalimy@.com', '555', 'FEMALE', 24);
 
 INSERT INTO POSTS(id, title, comment, createdDate, userId)
 VALUES (1, 'Title', 'Comment', NULL, 1),
