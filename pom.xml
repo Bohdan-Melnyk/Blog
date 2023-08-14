@@ -61,6 +61,11 @@
             <type>pom</type>
         </dependency>
 
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.6.15.Final</version>
+        </dependency>
 
         <!-- Jackson -->
         <dependency>
