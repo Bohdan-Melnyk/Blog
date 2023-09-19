@@ -1,6 +1,6 @@
 package com.softserve.blog.config;
 
-import com.softserve.blog.entity.Comment;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,8 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -31,13 +32,14 @@ public class HibernateConfig {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSourceBean());
-        sessionFactory.setPackagesToScan(new String[] {"com.softserve.blog"});
-        sessionFactory.setHibernateProperties(hibernateProperties());
+    public LocalContainerEntityManagerFactoryBean entityManager() {
+        LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
+        bean.setDataSource(dataSourceBean());
+        bean.setPackagesToScan("com.softserve.blog");
+        bean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        bean.setJpaProperties(hibernateProperties());
 
-        return sessionFactory;
+        return bean;
     }
 
     @Bean
@@ -53,10 +55,7 @@ public class HibernateConfig {
 
     @Bean
     public PlatformTransactionManager hibernateTransactionManager() {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactory().getObject());
-
-        return  transactionManager;
+        return new JpaTransactionManager(entityManager().getObject());
     }
 
     private Properties hibernateProperties() {
@@ -69,6 +68,7 @@ public class HibernateConfig {
         properties.put(org.hibernate.cfg.Environment.URL, environment.getRequiredProperty("hibernate.connection.url"));
         properties.put(org.hibernate.cfg.Environment.USER, environment.getRequiredProperty("hibernate.connection.username"));
         properties.put(org.hibernate.cfg.Environment.PASS, environment.getRequiredProperty("hibernate.connection.password"));
+        properties.put(org.hibernate.cfg.Environment.ENABLE_LAZY_LOAD_NO_TRANS, "true");
 
         org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
         configuration.setProperties(properties);
