@@ -26,13 +26,13 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "title")
     private String title;
 
-    @Column
+    @Column(name = "comment")
     private String comment;
 
-    @Column
+    @Column(name = "created_date")
     private Date createdDate;
 
     @ManyToOne(cascade = CascadeType.ALL)

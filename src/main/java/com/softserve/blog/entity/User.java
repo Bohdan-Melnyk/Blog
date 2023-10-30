@@ -25,23 +25,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "name")
     @NonNull
     private String name;
 
-    @Column
+    @Column(name = "email")
     @NonNull
     private String email;
 
-    @Column
+    @Column(name = "password")
     @NonNull
     private String password;
 
-    @Column
+    @Column(name = "sex")
     @NonNull
     private String sex;
 
-    @Column
+    @Column(name = "age")
     private Integer age;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
